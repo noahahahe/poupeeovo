@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指感 · 美甲創業紀錄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6F2;
+    --card:#FFFFFF;
+    --ink:#2E2024;
+    --ink-soft:#6B5B60;
+    --berry:#B23A5C;
+    --berry-deep:#8C2C48;
+    --mauve:#C98CA7;
+    --gold:#C9A227;
+    --line:#EBDFDA;
+    --shadow: 0 1px 2px rgba(46,32,36,.04), 0 8px 24px -12px rgba(46,32,36,.18);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 8% 0%, rgba(201,140,167,.10), transparent 40%),
+      radial-gradient(circle at 92% 8%, rgba(201,162,39,.08), transparent 35%);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+
+  /* ---- header ---- */
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand svg{flex-shrink:0;}
+  .brand-text h1{
+    font-family:'Fraunces', serif;font-weight:600;font-size:22px;margin:0;letter-spacing:.01em;color:var(--berry-deep);
+  }
+  .brand-text h1[contenteditable]{
+    outline:none;border-bottom:1.5px dashed transparent;padding-bottom:1px;cursor:text;transition:border-color .15s;
+  }
+  .brand-text h1[contenteditable]:hover,
+  .brand-text h1[contenteditable]:focus{border-color:var(--mauve);}
+  .brand-text h1[contenteditable]:empty::before{
+    content:'點此輸入店名';color:#d8b9c4;font-weight:500;
+  }
+  .brand-text p{margin:0;font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;}
+
+  nav{display:flex;gap:6px;background:#fff;padding:5px;border-radius:999px;box-shadow:var(--shadow);border:1px solid var(--line);}
+  .tab-btn{
+    display:flex;align-items:center;gap:6px;
+    border:none;background:transparent;padding:8px 14px;border-radius:999px;
+    font-family:'Work Sans',sans-serif;font-weight:600;font-size:13px;color:var(--ink-soft);
+    cursor:pointer;transition:.18s ease;
+  }
+  .tab-btn .cap{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .tab-btn.active{background:var(--ink);color:#fff;}
+  .tab-btn.active .cap{box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+
+  section{display:none;animation:fade .25s ease;}
+  section.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  /* ---- shared card ---- */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);}
+  .panel-pad{padding:18px;}
+  h2.section-title{
+    font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin:0 0 4px;color:var(--ink);
+  }
+  .muted{color:var(--ink-soft);font-size:13px;margin:0 0 16px;}
+
+  /* ---- buttons/inputs ---- */
+  .btn{
+    display:inline-flex;align-items:center;gap:6px;justify-content:center;
+    background:var(--berry);color:#fff;border:none;border-radius:10px;
+    padding:10px 16px;font-weight:600;font-size:13.5px;cursor:pointer;
+    font-family:'Work Sans',sans-serif;transition:.15s;
+  }
+  .btn:hover{background:var(--berry-deep);}
+  .btn.ghost{background:transparent;color:var(--berry);border:1.4px solid var(--berry);}
+  .btn.ghost:hover{background:rgba(178,58,92,.06);}
+  .btn.small{padding:6px 10px;font-size:12px;border-radius:8px;}
+  .btn.danger{background:transparent;color:#a04141;border:1px solid #e3cccc;}
+  .btn.danger:hover{background:#fbeeee;}
+
+  label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin:12px 0 5px;}
+  input[type=text], input[type=number], input[type=date], textarea, select{
+    width:100%;padding:10px 11px;border:1.4px solid var(--line);border-radius:9px;
+    font-family:'Work Sans',sans-serif;font-size:14px;color:var(--ink);background:#fff;
+  }
+  input:focus, textarea:focus, select:focus{outline:2px solid var(--mauve);outline-offset:1px;border-color:var(--mauve);}
+  textarea{resize:vertical;min-height:60px;}
+  input[type=color]{width:44px;height:38px;padding:2px;border:1.4px solid var(--line);border-radius:9px;cursor:pointer;background:#fff;}
+  .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .row > div{flex:1;min-width:140px;}
+
+  .form-card{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+
+  @media (max-width:480px){
+    .row{flex-direction:column;gap:0;}
+    .row > div{min-width:0;width:100%;}
+  }
+  input[type=date]{min-width:0;}
+
+  /* ---- portfolio ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:16px;}
+  .p-card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .p-swatch{height:10px;width:100%;}
+  .p-photo{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f2e9e4;display:block;}
+  .p-photo-empty{width:100%;aspect-ratio:1/1;background:#f6efeb;display:flex;align-items:center;justify-content:center;color:#d8c4bb;}
+  .p-body{padding:10px 12px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
+  .p-title{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;line-height:1.25;}
+  .p-meta{font-size:11.5px;color:var(--ink-soft);}
+  .p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+  .p-tag{font-size:10.5px;background:#f7eef1;color:var(--berry-deep);padding:2px 8px;border-radius:999px;font-weight:600;}
+  .p-notes{font-size:12px;color:var(--ink-soft);margin-top:2px;flex:1;}
+  .p-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+  .p-price{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--gold);font-weight:500;}
+
+  .empty-state{padding:40px 20px;text-align:center;color:var(--ink-soft);}
+  .empty-state svg{opacity:.5;margin-bottom:10px;}
+
+  /* ---- notes ---- */
+  .n-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+  .n-card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;}
+  .n-head{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;}
+  .n-cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .n-head-main{flex:1;min-width:0;}
+  .n-title{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;}
+  .n-meta{font-size:11.5px;color:var(--ink-soft);margin-top:1px;}
+  .n-chevron{transition:transform .2s ease;color:var(--ink-soft);flex-shrink:0;}
+  .n-card.open .n-chevron{transform:rotate(180deg);}
+  .n-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .n-card.open .n-body{max-height:2000px;}
+  .n-body-inner{padding:0 14px 16px;}
+  .n-content{font-size:13.5px;line-height:1.7;color:var(--ink);white-space:pre-wrap;margin-bottom:10px;}
+  .n-images{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .n-images img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--line);}
+  .n-foot{display:flex;justify-content:flex-end;}
+
+  .note-filters{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 4px;}
+  .filter-chip{
+    display:flex;align-items:center;gap:6px;
+    border:1.4px solid var(--line);background:#fff;color:var(--ink-soft);
+    padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;
+    cursor:pointer;transition:.15s ease;font-family:'Work Sans',sans-serif;
+  }
+  .filter-chip .chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .filter-chip:hover{border-color:var(--mauve);}
+  .filter-chip.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .filter-chip.active .chip-dot{box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+
+  .photo-thumb{position:relative;display:inline-block;}
+  .photo-thumb img{width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid var(--line);display:block;}
+  .photo-thumb .rm{
+    position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;
+    background:var(--ink);color:#fff;border:2px solid #fff;font-size:12px;line-height:1;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;
+  }
+
+  .cat-link{background:none;border:none;color:var(--berry);font-size:12px;font-weight:600;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;text-underline-offset:2px;}
+  .cat-manage{margin-top:10px;padding:12px;background:#faf5f2;border:1px solid var(--line);border-radius:10px;}
+  .cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .cat-row input[type=color]{width:34px;height:34px;flex-shrink:0;padding:2px;}
+  .cat-row input[type=text]{flex:1;padding:8px 10px;font-size:13px;}
+  .cat-row .icon-btn{background:none;border:none;color:#c9a9a9;cursor:pointer;padding:4px;flex-shrink:0;}
+  .cat-row .icon-btn:hover{color:#a04141;}
+  .cat-add-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+
+  /* ---- expenses ---- */
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);}
+  .stat .label{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .stat .value{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:500;color:var(--ink);}
+  .stat .value.accent{color:var(--berry);}
+
+  .ledger{margin-top:8px;border-top:1px solid var(--line);}
+  .ledger-row{
+    display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);
+  }
+  .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .ledger-main{flex:1;min-width:0;}
+  .ledger-cat{font-size:13.5px;font-weight:600;}
+  .ledger-note{font-size:12px;color:var(--ink-soft);}
+  .ledger-date{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+  .ledger-amt{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;white-space:nowrap;}
+  .ledger-del{background:none;border:none;color:#c9a9a9;cursor:pointer;padding:4px;flex-shrink:0;}
+  .ledger-del:hover{color:#a04141;}
+  .ledger-del.edit{color:#b8a6ac;}
+  .ledger-del.edit:hover{color:var(--berry);}
+
+  /* ---- dashboard ---- */
+  .bar-item{margin-bottom:14px;}
+  .bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+  .bar-track{background:#f3e9e4;border-radius:999px;height:9px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;transition:width .4s ease;}
+
+  .goal-box{margin-top:18px;}
+  .goal-track{background:#f3e9e4;border-radius:999px;height:16px;overflow:hidden;position:relative;}
+  .goal-fill{height:100%;background:linear-gradient(90deg,var(--mauve),var(--berry));border-radius:999px;transition:width .4s ease;}
+
+  .backup-box{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);}
+
+  footer{text-align:center;color:var(--ink-soft);font-size:11.5px;margin-top:30px;}
+
+  @media (max-width:520px){
+    nav{width:100%;justify-content:space-between;}
+    .tab-btn{flex:1;justify-content:center;padding:8px 6px;font-size:12px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <rect x="4" y="4" width="26" height="26" rx="13" fill="#F7EEF1"/>
+        <path d="M21 9v10.3a3.4 3.4 0 11-1.6-2.9V12l-6 1.4v6a3.4 3.4 0 11-1.6-2.9V11l9.2-2z" fill="#B23A5C"/>
+      </svg>
+      <div class="brand-text">
+        <h1 id="brandName" contenteditable="true" spellcheck="false"></h1>
+        <p>美甲創業紀錄本</p>
+      </div>
+    </div>
+    <nav>
+      <button class="tab-btn active" data-tab="portfolio"><span class="cap" style="background:var(--berry)"></span>作品集</button>
+      <button class="tab-btn" data-tab="notes"><span class="cap" style="background:#7C6A93"></span>筆記</button>
+      <button class="tab-btn" data-tab="expenses"><span class="cap" style="background:var(--gold)"></span>支出</button>
+      <button class="tab-btn" data-tab="dashboard"><span class="cap" style="background:var(--mauve)"></span>總覽</button>
+    </nav>
+  </header>
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section id="portfolio" class="active">
+    <div class="panel panel-pad">
+      <h2 class="section-title">作品集</h2>
+      <p class="muted">每次練習或接案完成的作品都存下來,累積成你開業的作品牆。</p>
+
+      <button class="btn" id="togglePortfolioForm">+ 新增作品</button>
+
+      <div class="form-card" id="portfolioForm" style="display:none;">
+        <div class="row">
+          <div>
+            <label>作品名稱 / 主題</label>
+            <input type="text" id="pf-title" placeholder="例如：法式漸層 / 貓眼玫瑰金">
+          </div>
+          <div style="max-width:70px;">
+            <label>色卡</label>
+            <input type="color" id="pf-color" value="#C98CA7">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>日期</label>
+            <input type="date" id="pf-date">
+          </div>
+          <div>
+            <label>風格分類</label>
+            <select id="pf-category">
+              <option>單色/裸色</option>
+              <option>法式</option>
+              <option>暈染/漸層</option>
+              <option>貓眼</option>
+              <option>手繪</option>
+              <option>造型/延甲</option>
+              <option>其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>對象</label>
+            <select id="pf-who">
+              <option>自己練習</option>
+              <option>朋友/模特</option>
+              <option>付費客人</option>
+            </select>
+          </div>
+          <div>
+            <label>收費金額（選填）</label>
+            <input type="number" id="pf-price" placeholder="0">
+          </div>
+        </div>
+        <label>照片（選填）</label>
+        <input type="file" id="pf-photo" accept="image/*">
+        <div class="n-images" id="pfPhotoPreview" style="margin-top:8px;"></div>
+        <label>筆記（用了什麼技法、遇到的問題、下次改進…）</label>
+        <textarea id="pf-notes" placeholder="例如：漸層海綿沾取量太多，邊緣暈開不均勻"></textarea>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button class="btn" id="savePortfolio">儲存作品</button>
+          <button class="btn ghost" id="cancelPortfolio">取消</button>
+        </div>
+      </div>
+
+      <div class="grid" id="portfolioGrid"></div>
+      <div class="empty-state" id="portfolioEmpty" style="display:none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C98CA7" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+        <div>還沒有作品，新增第一筆練習紀錄吧</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NOTES ============ -->
+  <section id="notes">
+    <div class="panel panel-pad">
+      <h2 class="section-title">美甲筆記</h2>
+      <p class="muted">技法、觀念、常犯的錯，整理起來以後就是你的 SOP。</p>
+
+      <button class="btn" id="toggleNoteForm">+ 新增筆記</button>
+
+      <div class="form-card" id="noteForm" style="display:none;">
+        <p class="muted" id="draftHint" style="display:none;background:#f7eef1;color:var(--berry-deep);padding:8px 10px;border-radius:8px;margin:0 0 10px;">📝 已還原上次未儲存完成的草稿</p>
+        <div class="row">
+          <div>
+            <label>標題</label>
+            <input type="text" id="nt-title" placeholder="例如：硬式膠 vs 軟式膠的差異">
+          </div>
+          <div>
+            <label>分類</label>
+            <select id="nt-category"></select>
+            <button class="cat-link" id="toggleCatManage">管理分類</button>
+          </div>
+        </div>
+
+        <div class="cat-manage" id="catManage" style="display:none;">
+          <div id="catList"></div>
+          <div class="cat-add-row">
+            <input type="color" id="newCatColor" value="#B23A5C">
+            <input type="text" id="newCatName" placeholder="新增分類名稱">
+            <button class="btn small" id="addCatBtn">新增</button>
+          </div>
+        </div>
+        <label>內容</label>
+        <textarea id="nt-content" style="min-height:140px;" placeholder="寫下重點、步驟、注意事項…"></textarea>
+        <label>補充圖片（可選多張）</label>
+        <input type="file" id="nt-photos" accept="image/*" multiple>
+        <div class="n-images" id="ntPhotoPreview" style="margin-top:8px;"></div>
+        <label>更新日期</label>
+        <input type="date" id="nt-date">
+        <p class="muted" id="autosaveNote" style="font-size:11px;margin:8px 0 0;">內容會自動存成草稿，離開後回來還在。</p>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button class="btn" id="saveNote">儲存筆記</button>
+          <button class="btn ghost" id="cancelNote">取消</button>
+        </div>
+      </div>
+
+      <div class="note-filters" id="noteFilters"></div>
+
+      <div class="n-list" id="notesList"></div>
+      <div class="empty-state" id="notesEmpty" style="display:none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#7C6A93" stroke-width="1.5"><path d="M4 4h13l3 3v13a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <div id="notesEmptyText">還沒有筆記，把學到的東西記下來吧</div>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- ============ EXPENSES ============ -->
+  <section id="expenses">
+    <div class="stat-row" id="expenseStats"></div>
+
+    <div class="panel panel-pad">
+      <h2 class="section-title">支出紀錄</h2>
+      <p class="muted">材料、課程、工具、場地租金……開業前的每一筆投入都記下來。</p>
+
+      <button class="btn" id="toggleExpenseForm">+ 新增支出</button>
+
+      <div class="form-card" id="expenseForm" style="display:none;">
+        <div class="row">
+          <div>
+            <label>日期</label>
+            <input type="date" id="ex-date">
+          </div>
+          <div>
+            <label>類別</label>
+            <select id="ex-category">
+              <option value="材料耗材">材料耗材</option>
+              <option value="工具設備">工具設備</option>
+              <option value="課程學費">課程學費</option>
+              <option value="房租場地">房租場地</option>
+              <option value="行銷其他">行銷其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>金額</label>
+            <input type="number" id="ex-amount" placeholder="0">
+          </div>
+          <div>
+            <label>備註</label>
+            <input type="text" id="ex-note" placeholder="例如：日系凝膠12色組">
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button class="btn" id="saveExpense">儲存支出</button>
+          <button class="btn ghost" id="cancelExpense">取消</button>
+        </div>
+      </div>
+
+      <div class="ledger" id="expenseLedger"></div>
+      <div class="empty-state" id="expenseEmpty" style="display:none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+        <div>還沒有支出紀錄</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section id="dashboard">
+    <div class="panel panel-pad">
+      <h2 class="section-title">開業準備總覽</h2>
+      <p class="muted">目前的投入與累積成果，一眼掌握。</p>
+
+      <div class="stat-row" id="dashStats"></div>
+
+      <div style="margin-top:8px;">
+        <h3 style="font-family:'Fraunces',serif;font-size:15px;margin:20px 0 12px;">支出類別佔比</h3>
+        <div id="categoryBars"></div>
+      </div>
+
+      <div class="goal-box">
+        <div class="row" style="align-items:flex-end;">
+          <div>
+            <label style="margin-top:0;">開業預備金目標（選填）</label>
+            <input type="number" id="goalInput" placeholder="例如：50000">
+          </div>
+          <div style="flex:0 0 auto;">
+            <button class="btn small" id="saveGoal">設定</button>
+          </div>
+        </div>
+        <div id="goalProgressWrap" style="display:none;margin-top:12px;">
+          <div class="bar-label"><span id="goalText"></span><span id="goalPct"></span></div>
+          <div class="goal-track"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="backup-box">
+        <h3 style="font-family:'Fraunces',serif;font-size:15px;margin:0 0 6px;">資料備份</h3>
+        <p class="muted" style="margin-bottom:12px;">資料存在這支手機的瀏覽器裡。換手機、清瀏覽器資料，或想同時在電腦上看，都建議先匯出備份，之後用「匯入備份」還原。</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn ghost small" id="exportBtn">匯出備份</button>
+          <button class="btn ghost small" id="importBtn">匯入備份</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none;">
+        </div>
+        <p class="muted" id="lastBackupNote" style="margin:8px 0 0;font-size:11.5px;"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>資料存在這支手機的瀏覽器裡，離線也能用，不會被其他人看到。換手機或清除瀏覽器資料前，記得先匯出備份。</footer>
+</div>
+
+<div id="syncWarning" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#3a2226;color:#fbeaea;border-radius:12px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:12.5px;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+    <div>⚠️ 這支手機的瀏覽器無法寫入本機儲存(常見原因：無痕/隱私瀏覽模式，或儲存空間已滿)。建議先下載備份檔，並改用一般瀏覽模式開啟。</div>
+    <button id="syncWarningClose" style="background:none;border:none;color:#fbeaea;font-size:16px;line-height:1;cursor:pointer;padding:0;">×</button>
+  </div>
+  <button class="btn small" id="syncWarningExport" style="margin-top:8px;">下載備份檔</button>
+</div>
+
+<script>
+const CATS = {
+  '材料耗材': '#B23A5C',
+  '工具設備': '#7C6A93',
+  '課程學費': '#C9A227',
+  '房租場地': '#4F6D5C',
+  '行銷其他': '#8C8C8C'
+};
+
+const NOTE_CATS_DEFAULT = [
+  { id:'c1', name:'前置處理', color:'#4F6D5C' },
+  { id:'c2', name:'膠的分類', color:'#B23A5C' },
+  { id:'c3', name:'打磨機用法', color:'#7C6A93' },
+  { id:'c4', name:'工具介紹', color:'#C9A227' },
+  { id:'c5', name:'其他', color:'#8C8C8C' }
+];
+
+let portfolio = [];
+let expenses = [];
+let notes = [];
+let noteCategories = [];
+let settings = { goal: null };
+
+function getCatColor(name){
+  const c = noteCategories.find(c=>c.name===name);
+  return c ? c.color : '#999';
+}
+
+const $ = id => document.getElementById(id);
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    $(btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='dashboard') renderDashboard();
+  });
+});
+
+// ---------- storage helpers ----------
+// 改用瀏覽器本機儲存(localStorage)：存在這支手機的這個瀏覽器裡，
+// 不需要網路連到 Claude 的伺服器，加到主畫面當獨立 app 用時最穩定。
+const DATA_KEY = 'nail-studio-data';
+
+function localGet(){
+  try{
+    const raw = localStorage.getItem(DATA_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){
+    console.error('localStorage get failed', e);
+    return null;
+  }
+}
+
+function localSet(payload){
+  try{
+    localStorage.setItem(DATA_KEY, payload);
+    return true;
+  }catch(e){
+    // 常見原因：無痕模式擋掉 localStorage，或空間已滿
+    console.error('localStorage set failed', e);
+    showSyncWarning();
+    return false;
+  }
+}
+
+// 舊資料曾經存在 Claude 雲端(window.storage)，第一次載入時盡量撈一次回來，
+// 之後就完全改走手機本機儲存，不再需要網路。
+async function tryRecoverFromCloud(){
+  if(typeof window.storage === 'undefined') return null;
+  try{
+    const res = await window.storage.get('studio-data', false);
+    if(res){ const d = JSON.parse(res.value); if(d) return d; }
+  }catch(e){}
+  const merged = {};
+  let found = false;
+  try{ const p = await window.storage.get('portfolio-items', false); if(p){ merged.portfolio = JSON.parse(p.value); found = true; } }catch(e){}
+  try{ const ex = await window.storage.get('expense-items', false); if(ex){ merged.expenses = JSON.parse(ex.value); found = true; } }catch(e){}
+  try{ const n = await window.storage.get('note-items', false); if(n){ merged.notes = JSON.parse(n.value); found = true; } }catch(e){}
+  try{ const nc = await window.storage.get('note-categories', false); if(nc){ merged.noteCategories = JSON.parse(nc.value); found = true; } }catch(e){}
+  try{ const s = await window.storage.get('settings', false); if(s){ merged.settings = JSON.parse(s.value); found = true; } }catch(e){}
+  return found ? merged : null;
+}
+
+async function loadAll(){
+  let data = localGet();
+  let needsInitialSave = false;
+
+  if(!data){
+    data = await tryRecoverFromCloud();
+    if(data) needsInitialSave = true;
+  }
+
+  portfolio = (data && data.portfolio) || [];
+  expenses = (data && data.expenses) || [];
+  notes = (data && data.notes) || [];
+  noteCategories = (data && data.noteCategories) || NOTE_CATS_DEFAULT.slice();
+  settings = (data && data.settings) || { goal: null };
+
+  $('brandName').textContent = settings.brandName || 'h3avnly1ace';
+  renderPortfolio();
+  renderExpenses();
+  renderCategorySelect();
+  renderCatManage();
+  renderNoteFilters();
+  renderNotes();
+  await restoreNoteDraft();
+  if(needsInitialSave){ await persistAll(); }
+}
+
+let lastSavedSnapshot = '';
+async function persistAll(){
+  const payload = JSON.stringify({ portfolio, expenses, notes, noteCategories, settings });
+  if(payload === lastSavedSnapshot) return true; // 內容沒變就不重複寫
+  const ok = localSet(payload);
+  if(ok) lastSavedSnapshot = payload;
+  return ok;
+}
+
+
+function showSyncWarning(){
+  $('syncWarning').style.display = 'block';
+}
+
+async function savePortfolioData(){ await persistAll(); }
+async function saveExpenseData(){ await persistAll(); }
+async function saveNoteData(){ await persistAll(); }
+async function saveCategoryData(){ await persistAll(); }
+async function saveSettingsData(){ await persistAll(); }
+
+// ---------- portfolio form ----------
+let editingPortfolioId = null;
+let pendingPortfolioPhoto = null;
+
+$('togglePortfolioForm').addEventListener('click', ()=>{
+  const opening = $('portfolioForm').style.display==='none';
+  $('portfolioForm').style.display = opening ? 'block' : 'none';
+  if(opening && !editingPortfolioId) resetPortfolioForm(true);
+  if(!opening) resetPortfolioForm(false);
+});
+$('cancelPortfolio').addEventListener('click', ()=>{
+  $('portfolioForm').style.display='none';
+  resetPortfolioForm(false);
+});
+
+function resetPortfolioForm(setToday){
+  editingPortfolioId = null;
+  ['pf-title','pf-notes','pf-price'].forEach(id=>$(id).value='');
+  $('pf-photo').value='';
+  pendingPortfolioPhoto = null;
+  renderPfPhotoPreview();
+  $('pf-category').selectedIndex = 0;
+  $('pf-who').selectedIndex = 0;
+  $('pf-color').value = '#C98CA7';
+  if(setToday) $('pf-date').valueAsDate = new Date();
+  $('savePortfolio').textContent = '儲存作品';
+}
+
+function renderPfPhotoPreview(){
+  const wrap = $('pfPhotoPreview');
+  wrap.innerHTML = '';
+  if(!pendingPortfolioPhoto) return;
+  const t = document.createElement('div');
+  t.className = 'photo-thumb';
+  t.innerHTML = `<img src="${pendingPortfolioPhoto}"><button class="rm">×</button>`;
+  t.querySelector('.rm').addEventListener('click', ()=>{
+    pendingPortfolioPhoto = null;
+    renderPfPhotoPreview();
+  });
+  wrap.appendChild(t);
+}
+
+$('pf-photo').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(file){ pendingPortfolioPhoto = await resizeImage(file); }
+  e.target.value = '';
+  renderPfPhotoPreview();
+});
+
+function startEditPortfolio(item){
+  editingPortfolioId = item.id;
+  $('pf-title').value = item.title;
+  $('pf-color').value = item.color || '#C98CA7';
+  $('pf-date').value = item.date;
+  $('pf-category').value = item.category;
+  $('pf-who').value = item.who;
+  $('pf-price').value = item.price || '';
+  $('pf-notes').value = item.notes || '';
+  pendingPortfolioPhoto = item.photo || null;
+  renderPfPhotoPreview();
+  $('savePortfolio').textContent = '更新作品';
+  $('portfolioForm').style.display = 'block';
+  $('portfolioForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function resizeImage(file, maxW=480){
+  return new Promise((resolve)=>{
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const scale = Math.min(1, maxW/img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width*scale;
+        canvas.height = img.height*scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+$('savePortfolio').addEventListener('click', async ()=>{
+  const title = $('pf-title').value.trim();
+  if(!title){ $('pf-title').focus(); return; }
+  const btn = $('savePortfolio');
+  btn.disabled = true; btn.textContent = '儲存中...';
+
+  if(editingPortfolioId){
+    const idx = portfolio.findIndex(p=>p.id===editingPortfolioId);
+    if(idx !== -1){
+      portfolio[idx] = {
+        ...portfolio[idx],
+        title,
+        color: $('pf-color').value,
+        date: $('pf-date').value || portfolio[idx].date,
+        category: $('pf-category').value,
+        who: $('pf-who').value,
+        price: $('pf-price').value ? Number($('pf-price').value) : null,
+        notes: $('pf-notes').value.trim(),
+        photo: pendingPortfolioPhoto
+      };
+    }
+  } else {
+    portfolio.unshift({
+      id: Date.now().toString(),
+      title,
+      color: $('pf-color').value,
+      date: $('pf-date').value || new Date().toISOString().slice(0,10),
+      category: $('pf-category').value,
+      who: $('pf-who').value,
+      price: $('pf-price').value ? Number($('pf-price').value) : null,
+      notes: $('pf-notes').value.trim(),
+      photo: pendingPortfolioPhoto
+    });
+  }
+
+  await savePortfolioData();
+  renderPortfolio();
+  resetPortfolioForm(false);
+  $('portfolioForm').style.display='none';
+  btn.disabled=false;
+});
+
+function renderPortfolio(){
+  const grid = $('portfolioGrid');
+  grid.innerHTML = '';
+  $('portfolioEmpty').style.display = portfolio.length ? 'none' : 'block';
+  portfolio.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'p-card';
+    card.innerHTML = `
+      <div class="p-swatch" style="background:${item.color}"></div>
+      ${item.photo ? `<img class="p-photo" src="${item.photo}" alt="${escapeHtml(item.title)}">` :
+        `<div class="p-photo-empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d8c4bb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
+      <div class="p-body">
+        <div class="p-title">${escapeHtml(item.title)}</div>
+        <div class="p-meta">${item.date} · ${item.who}</div>
+        <div class="p-tags"><span class="p-tag">${item.category}</span></div>
+        ${item.notes ? `<div class="p-notes">${escapeHtml(item.notes)}</div>` : ''}
+        <div class="p-actions">
+          <span class="p-price">${item.price ? 'NT$'+item.price : ''}</span>
+          <div style="display:flex;gap:2px;">
+            <button class="ledger-del edit" data-id="${item.id}" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+            <button class="ledger-del" data-id="${item.id}" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>
+          </div>
+        </div>
+      </div>`;
+    card.querySelector('.edit').addEventListener('click', ()=>{ startEditPortfolio(item); });
+    card.querySelectorAll('.ledger-del')[1].addEventListener('click', async ()=>{
+      portfolio = portfolio.filter(p=>p.id!==item.id);
+      if(editingPortfolioId === item.id){ resetPortfolioForm(false); $('portfolioForm').style.display='none'; }
+      await savePortfolioData();
+      renderPortfolio();
+    });
+    grid.appendChild(card);
+  });
+}
+
+// ---------- notes form ----------
+let pendingNoteImages = [];
+let noteDraftHydrating = false;
+
+function debounce(fn, delay){
+  let t;
+  return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), delay); };
+}
+
+$('toggleNoteForm').addEventListener('click', ()=>{
+  const opening = $('noteForm').style.display==='none';
+  $('noteForm').style.display = opening ? 'block' : 'none';
+  if(opening && !editingNoteId) resetNoteForm(true);
+  if(!opening) resetNoteForm(false);
+});
+$('cancelNote').addEventListener('click', async ()=>{
+  $('noteForm').style.display='none';
+  const wasEditing = !!editingNoteId;
+  resetNoteForm(false);
+  if(!wasEditing) await clearNoteDraft();
+});
+
+function renderPhotoPreview(){
+  const wrap = $('ntPhotoPreview');
+  wrap.innerHTML = '';
+  pendingNoteImages.forEach((src, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'photo-thumb';
+    t.innerHTML = `<img src="${src}"><button class="rm" data-idx="${idx}">×</button>`;
+    t.querySelector('.rm').addEventListener('click', ()=>{
+      pendingNoteImages.splice(idx,1);
+      renderPhotoPreview();
+      saveNoteDraft();
+    });
+    wrap.appendChild(t);
+  });
+}
+
+$('nt-photos').addEventListener('change', async (e)=>{
+  const files = Array.from(e.target.files || []);
+  for(const f of files){ pendingNoteImages.push(await resizeImage(f)); }
+  e.target.value = '';
+  renderPhotoPreview();
+  saveNoteDraft();
+});
+
+let lastSavedDraftSnapshot = '';
+
+async function saveNoteDraft(){
+  if(noteDraftHydrating) return;
+  if(editingNoteId) return; // 編輯既有筆記時不建立新草稿，避免存回時變成重複一筆
+  const title = $('nt-title').value;
+  const content = $('nt-content').value;
+  const category = $('nt-category').value;
+  const date = $('nt-date').value;
+  if(!title.trim() && !content.trim() && pendingNoteImages.length===0){
+    if(settings.noteDraft){
+      settings.noteDraft = null;
+      await persistAll();
+    }
+    return;
+  }
+  const draft = { title, content, category, date, images: pendingNoteImages };
+  const payload = JSON.stringify(draft);
+  if(payload === lastSavedDraftSnapshot) return; // 內容沒變就不重複寫入
+  settings.noteDraft = draft;
+  const ok = await persistAll();
+  if(ok) lastSavedDraftSnapshot = payload;
+}
+// 停止輸入 2.5 秒後才存一次草稿，大幅減少寫入頻率
+const saveNoteDraftDebounced = debounce(saveNoteDraft, 2500);
+
+async function clearNoteDraft(){
+  if(settings.noteDraft){
+    settings.noteDraft = null;
+    await persistAll();
+  }
+}
+
+$('nt-title').addEventListener('input', saveNoteDraftDebounced);
+$('nt-content').addEventListener('input', saveNoteDraftDebounced);
+$('nt-category').addEventListener('change', saveNoteDraft);
+$('nt-date').addEventListener('change', saveNoteDraft);
+
+async function restoreNoteDraft(){
+  const draft = settings.noteDraft;
+  if(!draft) return;
+  const hasContent = (draft.title && draft.title.trim()) || (draft.content && draft.content.trim()) || (draft.images && draft.images.length);
+  if(!hasContent) return;
+
+  noteDraftHydrating = true;
+  $('nt-title').value = draft.title || '';
+  $('nt-content').value = draft.content || '';
+  if(draft.category) $('nt-category').value = draft.category;
+  $('nt-date').value = draft.date || '';
+  pendingNoteImages = draft.images || [];
+  renderPhotoPreview();
+  $('noteForm').style.display = 'block';
+  $('draftHint').style.display = 'block';
+  lastSavedDraftSnapshot = JSON.stringify(draft);
+  noteDraftHydrating = false;
+}
+
+function renderCategorySelect(){
+  const sel = $('nt-category');
+  const current = sel.value;
+  sel.innerHTML = noteCategories.map(c=>`<option value="${escapeHtml(c.name)}">${escapeHtml(c.name)}</option>`).join('');
+  if(noteCategories.some(c=>c.name===current)) sel.value = current;
+}
+
+// ---------- notes filter ----------
+let activeNoteFilter = null; // null = 全部
+
+function renderNoteFilters(){
+  const wrap = $('noteFilters');
+  wrap.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-chip' + (activeNoteFilter===null ? ' active' : '');
+  allBtn.textContent = '全部';
+  allBtn.addEventListener('click', ()=>{
+    activeNoteFilter = null;
+    renderNoteFilters();
+    renderNotes();
+  });
+  wrap.appendChild(allBtn);
+
+  noteCategories.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.className = 'filter-chip' + (activeNoteFilter===cat.name ? ' active' : '');
+    btn.innerHTML = `<span class="chip-dot" style="background:${cat.color}"></span>${escapeHtml(cat.name)}`;
+    btn.addEventListener('click', ()=>{
+      activeNoteFilter = (activeNoteFilter===cat.name) ? null : cat.name;
+      renderNoteFilters();
+      renderNotes();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+$('toggleCatManage').addEventListener('click', ()=>{
+  $('catManage').style.display = $('catManage').style.display==='none' ? 'block' : 'none';
+});
+
+function renderCatManage(){
+  const list = $('catList');
+  list.innerHTML = '';
+  noteCategories.forEach(cat=>{
+    const row = document.createElement('div');
+    row.className = 'cat-row';
+    row.innerHTML = `
+      <input type="color" value="${cat.color}">
+      <input type="text" value="${escapeHtml(cat.name)}">
+      <button class="icon-btn" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>`;
+    const colorInput = row.querySelector('input[type=color]');
+    const nameInput = row.querySelector('input[type=text]');
+    const delBtn = row.querySelector('.icon-btn');
+
+    async function applyRename(){
+      const oldName = cat.name;
+      const newName = nameInput.value.trim();
+      if(!newName){ nameInput.value = cat.name; return; }
+      if(newName !== oldName){
+        notes.forEach(n=>{ if(n.category===oldName) n.category = newName; });
+        if(activeNoteFilter === oldName) activeNoteFilter = newName;
+        await saveNoteData();
+      }
+      cat.name = newName;
+      await saveCategoryData();
+      renderCategorySelect();
+      renderNoteFilters();
+      renderNotes();
+    }
+    nameInput.addEventListener('blur', applyRename);
+    nameInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ nameInput.blur(); } });
+
+    colorInput.addEventListener('input', async ()=>{
+      cat.color = colorInput.value;
+      await saveCategoryData();
+      renderNoteFilters();
+      renderNotes();
+    });
+
+    delBtn.addEventListener('click', async ()=>{
+      if(activeNoteFilter === cat.name) activeNoteFilter = null;
+      noteCategories = noteCategories.filter(c=>c.id!==cat.id);
+      await saveCategoryData();
+      renderCategorySelect();
+      renderCatManage();
+      renderNoteFilters();
+      renderNotes();
+    });
+
+    list.appendChild(row);
+  });
+}
+
+$('addCatBtn').addEventListener('click', async ()=>{
+  const name = $('newCatName').value.trim();
+  if(!name) return;
+  noteCategories.push({ id: Date.now().toString(), name, color: $('newCatColor').value });
+  await saveCategoryData();
+  $('newCatName').value = '';
+  renderCategorySelect();
+  renderCatManage();
+  renderNoteFilters();
+});
+
+let editingNoteId = null;
+
+function resetNoteForm(setToday){
+  editingNoteId = null;
+  $('nt-title').value=''; $('nt-content').value='';
+  pendingNoteImages = [];
+  renderPhotoPreview();
+  $('nt-category').selectedIndex = 0;
+  if(setToday) $('nt-date').valueAsDate = new Date();
+  $('saveNote').textContent = '儲存筆記';
+  $('draftHint').style.display = 'none';
+}
+
+function startEditNote(item){
+  editingNoteId = item.id;
+  $('nt-title').value = item.title;
+  if(item.category) $('nt-category').value = item.category;
+  $('nt-content').value = item.content || '';
+  $('nt-date').value = item.date;
+  pendingNoteImages = (item.images || []).slice();
+  renderPhotoPreview();
+  $('draftHint').style.display = 'none';
+  $('saveNote').textContent = '更新筆記';
+  $('noteForm').style.display = 'block';
+  $('noteForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+$('saveNote').addEventListener('click', async ()=>{
+  const title = $('nt-title').value.trim();
+  if(!title){ $('nt-title').focus(); return; }
+  const btn = $('saveNote');
+  btn.disabled = true; btn.textContent = '儲存中...';
+
+  if(editingNoteId){
+    const idx = notes.findIndex(n=>n.id===editingNoteId);
+    if(idx !== -1){
+      notes[idx] = {
+        ...notes[idx],
+        title,
+        category: $('nt-category').value,
+        content: $('nt-content').value.trim(),
+        images: pendingNoteImages.slice(),
+        date: $('nt-date').value || notes[idx].date
+      };
+    }
+  } else {
+    notes.unshift({
+      id: Date.now().toString(),
+      title,
+      category: $('nt-category').value,
+      content: $('nt-content').value.trim(),
+      images: pendingNoteImages.slice(),
+      date: $('nt-date').value || new Date().toISOString().slice(0,10)
+    });
+  }
+
+  await saveNoteData();
+  renderNotes();
+
+  const wasEditing = !!editingNoteId;
+  resetNoteForm(false);
+  if(!wasEditing) await clearNoteDraft();
+  $('noteForm').style.display='none';
+  btn.disabled=false;
+});
+
+function renderNotes(){
+  const list = $('notesList');
+  list.innerHTML = '';
+  const filtered = activeNoteFilter ? notes.filter(n=>n.category===activeNoteFilter) : notes;
+
+  if(notes.length === 0){
+    $('notesEmpty').style.display = 'block';
+    $('notesEmptyText').textContent = '還沒有筆記，把學到的東西記下來吧';
+  } else if(filtered.length === 0){
+    $('notesEmpty').style.display = 'block';
+    $('notesEmptyText').textContent = `「${activeNoteFilter}」分類目前還沒有筆記`;
+  } else {
+    $('notesEmpty').style.display = 'none';
+  }
+
+  filtered.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'n-card';
+    card.innerHTML = `
+      <div class="n-head">
+        <span class="n-cat-dot" style="background:${getCatColor(item.category)}"></span>
+        <div class="n-head-main">
+          <div class="n-title">${escapeHtml(item.title)}</div>
+          <div class="n-meta">${item.category} · 更新於 ${item.date}</div>
+        </div>
+        <svg class="n-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="n-body">
+        <div class="n-body-inner">
+          ${item.content ? `<div class="n-content">${escapeHtml(item.content)}</div>` : ''}
+          ${item.images && item.images.length ? `<div class="n-images">${item.images.map(src=>`<img src="${src}">`).join('')}</div>` : ''}
+          <div class="n-foot">
+            <button class="ledger-del edit" data-id="${item.id}" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+            <button class="ledger-del" data-id="${item.id}" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>
+          </div>
+        </div>
+      </div>`;
+    card.querySelector('.n-head').addEventListener('click', ()=>{
+      card.classList.toggle('open');
+    });
+    card.querySelector('.edit').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      startEditNote(item);
+    });
+    card.querySelectorAll('.ledger-del')[1].addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      notes = notes.filter(n=>n.id!==item.id);
+      if(editingNoteId === item.id){ resetNoteForm(false); $('noteForm').style.display='none'; }
+      await saveNoteData();
+      renderNotes();
+    });
+    list.appendChild(card);
+  });
+}
+
+// ---------- expenses form ----------
+let editingExpenseId = null;
+
+$('toggleExpenseForm').addEventListener('click', ()=>{
+  const opening = $('expenseForm').style.display==='none';
+  $('expenseForm').style.display = opening ? 'block' : 'none';
+  if(opening && !editingExpenseId) resetExpenseForm(true);
+  if(!opening) resetExpenseForm(false);
+});
+$('cancelExpense').addEventListener('click', ()=>{
+  $('expenseForm').style.display='none';
+  resetExpenseForm(false);
+});
+
+function resetExpenseForm(setToday){
+  editingExpenseId = null;
+  $('ex-amount').value=''; $('ex-note').value='';
+  $('ex-category').selectedIndex = 0;
+  if(setToday) $('ex-date').valueAsDate = new Date();
+  $('saveExpense').textContent = '儲存支出';
+}
+
+function startEditExpense(item){
+  editingExpenseId = item.id;
+  $('ex-date').value = item.date;
+  $('ex-category').value = item.category;
+  $('ex-amount').value = item.amount;
+  $('ex-note').value = item.note || '';
+  $('saveExpense').textContent = '更新支出';
+  $('expenseForm').style.display = 'block';
+  $('expenseForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+$('saveExpense').addEventListener('click', async ()=>{
+  const amount = Number($('ex-amount').value);
+  if(!amount){ $('ex-amount').focus(); return; }
+
+  if(editingExpenseId){
+    const idx = expenses.findIndex(e=>e.id===editingExpenseId);
+    if(idx !== -1){
+      expenses[idx] = {
+        ...expenses[idx],
+        date: $('ex-date').value || expenses[idx].date,
+        category: $('ex-category').value,
+        amount,
+        note: $('ex-note').value.trim()
+      };
+    }
+  } else {
+    expenses.unshift({
+      id: Date.now().toString(),
+      date: $('ex-date').value || new Date().toISOString().slice(0,10),
+      category: $('ex-category').value,
+      amount,
+      note: $('ex-note').value.trim()
+    });
+  }
+
+  await saveExpenseData();
+  renderExpenses();
+  resetExpenseForm(false);
+  $('expenseForm').style.display='none';
+});
+
+function renderExpenses(){
+  const ledger = $('expenseLedger');
+  ledger.innerHTML = '';
+  $('expenseEmpty').style.display = expenses.length ? 'none' : 'block';
+  expenses.forEach(item=>{
+    const row = document.createElement('div');
+    row.className = 'ledger-row';
+    row.innerHTML = `
+      <span class="cat-dot" style="background:${CATS[item.category]||'#999'}"></span>
+      <div class="ledger-main">
+        <div class="ledger-cat">${item.category}${item.note ? ' <span class="ledger-note">· '+escapeHtml(item.note)+'</span>' : ''}</div>
+        <div class="ledger-date">${item.date}</div>
+      </div>
+      <div class="ledger-amt">NT$ ${item.amount.toLocaleString()}</div>
+      <button class="ledger-del edit" data-id="${item.id}" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+      <button class="ledger-del" data-id="${item.id}" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>`;
+    row.querySelector('.edit').addEventListener('click', ()=>{ startEditExpense(item); });
+    row.querySelectorAll('.ledger-del')[1].addEventListener('click', async ()=>{
+      expenses = expenses.filter(e=>e.id!==item.id);
+      if(editingExpenseId === item.id){ resetExpenseForm(false); $('expenseForm').style.display='none'; }
+      await saveExpenseData();
+      renderExpenses();
+    });
+    ledger.appendChild(row);
+  });
+
+  const total = expenses.reduce((s,e)=>s+e.amount,0);
+  const thisMonth = expenses.filter(e=> e.date && e.date.slice(0,7) === new Date().toISOString().slice(0,7)).reduce((s,e)=>s+e.amount,0);
+  $('expenseStats').innerHTML = `
+    <div class="stat"><div class="label">累計支出</div><div class="value accent">NT$ ${total.toLocaleString()}</div></div>
+    <div class="stat"><div class="label">本月支出</div><div class="value">NT$ ${thisMonth.toLocaleString()}</div></div>
+    <div class="stat"><div class="label">紀錄筆數</div><div class="value">${expenses.length}</div></div>
+  `;
+}
+
+// ---------- dashboard ----------
+function renderDashboard(){
+  const totalSpent = expenses.reduce((s,e)=>s+e.amount,0);
+  const totalWorks = portfolio.length;
+  const paidWorks = portfolio.filter(p=>p.price).length;
+  const earned = portfolio.reduce((s,p)=>s+(p.price||0),0);
+
+  $('dashStats').innerHTML = `
+    <div class="stat"><div class="label">累計投入</div><div class="value accent">NT$ ${totalSpent.toLocaleString()}</div></div>
+    <div class="stat"><div class="label">作品總數</div><div class="value">${totalWorks}</div></div>
+    <div class="stat"><div class="label">付費案件</div><div class="value">${paidWorks}</div></div>
+    <div class="stat"><div class="label">已賺回</div><div class="value" style="color:#4F6D5C">NT$ ${earned.toLocaleString()}</div></div>
+  `;
+
+  const byCat = {};
+  expenses.forEach(e=>{ byCat[e.category] = (byCat[e.category]||0) + e.amount; });
+  const max = Math.max(1, ...Object.values(byCat));
+  const bars = $('categoryBars');
+  bars.innerHTML = '';
+  Object.keys(CATS).forEach(cat=>{
+    const val = byCat[cat] || 0;
+    const pct = totalSpent ? Math.round(val/totalSpent*100) : 0;
+    const div = document.createElement('div');
+    div.className = 'bar-item';
+    div.innerHTML = `
+      <div class="bar-label"><span>${cat}</span><span>NT$ ${val.toLocaleString()} ${totalSpent? '('+pct+'%)':''}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(val/max*100)}%;background:${CATS[cat]}"></div></div>`;
+    bars.appendChild(div);
+  });
+
+  if(settings.goal){
+    $('goalInput').value = settings.goal;
+    $('goalProgressWrap').style.display = 'block';
+    const pct = Math.min(100, Math.round(totalSpent/settings.goal*100));
+    $('goalText').textContent = `NT$ ${totalSpent.toLocaleString()} / NT$ ${settings.goal.toLocaleString()}`;
+    $('goalPct').textContent = pct+'%';
+    $('goalFill').style.width = pct+'%';
+  } else {
+    $('goalProgressWrap').style.display = 'none';
+  }
+}
+
+$('brandName').addEventListener('blur', async ()=>{
+  settings.brandName = $('brandName').textContent.trim();
+  await saveSettingsData();
+});
+$('brandName').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){ e.preventDefault(); $('brandName').blur(); }
+});
+
+$('saveGoal').addEventListener('click', async ()=>{
+  const v = Number($('goalInput').value);
+  settings.goal = v || null;
+  await saveSettingsData();
+  renderDashboard();
+});
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ---------- backup / restore ----------
+function exportBackup(){
+  const data = { portfolio, expenses, notes, noteCategories, settings, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `美甲紀錄備份-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  $('lastBackupNote').textContent = '已匯出：' + new Date().toLocaleString('zh-TW');
+}
+
+$('exportBtn').addEventListener('click', exportBackup);
+$('syncWarningExport').addEventListener('click', exportBackup);
+$('syncWarningClose').addEventListener('click', ()=>{ $('syncWarning').style.display='none'; });
+
+$('importBtn').addEventListener('click', ()=>{ $('importFile').click(); });
+$('importFile').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const text = await file.text();
+    const data = JSON.parse(text);
+    portfolio = data.portfolio || [];
+    expenses = data.expenses || [];
+    notes = data.notes || [];
+    noteCategories = data.noteCategories || NOTE_CATS_DEFAULT.slice();
+    settings = data.settings || { goal: null };
+
+    activeNoteFilter = null;
+    renderPortfolio();
+    renderExpenses();
+    renderCategorySelect();
+    renderCatManage();
+    renderNoteFilters();
+    renderNotes();
+    renderDashboard();
+    $('brandName').textContent = settings.brandName || 'h3avnly1ace';
+
+    await persistAll();
+
+    $('lastBackupNote').textContent = '已從備份還原：' + new Date().toLocaleString('zh-TW');
+  }catch(err){
+    alert('匯入失敗，請確認檔案是否為正確的備份 JSON 檔');
+    console.error(err);
+  }
+  $('importFile').value = '';
+});
+
+loadAll();
+</script>
+</body>
+</html>
