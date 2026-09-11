@@ -112,15 +112,21 @@
     background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
     box-shadow:var(--shadow);display:flex;flex-direction:column;
   }
+  .p-header{cursor:pointer;}
   .p-swatch{height:10px;width:100%;}
   .p-photo{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f2e9e4;display:block;}
   .p-photo-empty{width:100%;aspect-ratio:1/1;background:#f6efeb;display:flex;align-items:center;justify-content:center;color:#d8c4bb;}
-  .p-body{padding:10px 12px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
+  .p-title-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:10px 12px;}
   .p-title{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;line-height:1.25;}
+  .p-chevron{color:var(--ink-soft);flex-shrink:0;transition:transform .2s ease;}
+  .p-card.open .p-chevron{transform:rotate(180deg);}
+  .p-collapsible{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .p-card.open .p-collapsible{max-height:2000px;}
+  .p-collapsible-inner{padding:0 12px 12px;display:flex;flex-direction:column;gap:4px;}
   .p-meta{font-size:11.5px;color:var(--ink-soft);}
   .p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
   .p-tag{font-size:10.5px;background:#f7eef1;color:var(--berry-deep);padding:2px 8px;border-radius:999px;font-weight:600;}
-  .p-notes{font-size:12px;color:var(--ink-soft);margin-top:2px;flex:1;}
+  .p-notes{font-size:12px;color:var(--ink-soft);margin-top:2px;}
   .p-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
   .p-price{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--gold);font-weight:500;}
 
@@ -173,6 +179,21 @@
   .cat-row .icon-btn{background:none;border:none;color:#c9a9a9;cursor:pointer;padding:4px;flex-shrink:0;}
   .cat-row .icon-btn:hover{color:#a04141;}
   .cat-add-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+
+  .material-card{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:#faf7f5;}
+  .material-row{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
+  .material-row input{flex:1;min-width:0;padding:8px 9px;font-size:13px;background:#fff;}
+  .material-row .icon-btn{flex-shrink:0;}
+  .finger-row{display:flex;align-items:center;gap:5px;margin-top:4px;}
+  .finger-label{width:14px;font-size:11.5px;color:var(--ink-soft);flex-shrink:0;text-align:center;}
+  .finger-btn{
+    width:28px;height:28px;border-radius:50%;border:1.4px solid var(--line);background:#fff;
+    font-size:11px;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;font-family:'Work Sans',sans-serif;padding:0;
+  }
+  .finger-btn.active{background:var(--berry);color:#fff;border-color:var(--berry);}
+  .p-materials{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+  .p-material-tag{font-size:10.5px;background:#f3eef7;color:#5b4a68;padding:2px 8px;border-radius:999px;font-weight:600;}
 
   /* ---- expenses ---- */
   .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
@@ -289,9 +310,26 @@
             <input type="number" id="pf-price" placeholder="0">
           </div>
         </div>
-        <label>照片（選填）</label>
-        <input type="file" id="pf-photo" accept="image/*">
-        <div class="n-images" id="pfPhotoPreview" style="margin-top:8px;"></div>
+        <label>封面照（選填）</label>
+        <input type="file" id="pf-cover-photo" accept="image/*">
+        <div class="n-images" id="pfCoverPreview" style="margin-top:8px;"></div>
+
+        <label>內容細節照（可選多張）</label>
+        <input type="file" id="pf-detail-photos" accept="image/*" multiple>
+        <div class="n-images" id="pfDetailPreview" style="margin-top:8px;"></div>
+
+        <label>使用材料（膠類、品牌、色號）</label>
+        <div id="materialsList"></div>
+        <button type="button" class="cat-link" id="addMaterialRow" style="margin-top:2px;">+ 新增材料</button>
+        <datalist id="materialCategoryOptions">
+          <option value="暈染液"><option value="砂糖膠"><option value="色膠"><option value="色鉛筆">
+          <option value="霧面封層"><option value="建構膠"><option value="底膠"><option value="水染液">
+          <option value="砂礫膠"><option value="軟糖膠"><option value="油畫膠"><option value="顏料膠">
+          <option value="上層膠"><option value="偏光粉"><option value="金屬膠"><option value="墨水">
+          <option value="石膏膠"><option value="金屬粉"><option value="水彩"><option value="洞洞膠">
+          <option value="彩繪膠"><option value="鏡面粉"><option value="奶油膠">
+        </datalist>
+
         <label>筆記（用了什麼技法、遇到的問題、下次改進…）</label>
         <textarea id="pf-notes" placeholder="例如：漸層海綿沾取量太多，邊緣暈開不均勻"></textarea>
         <div style="margin-top:14px;display:flex;gap:8px;">
@@ -456,7 +494,7 @@
     </div>
   </section>
 
-  <footer>資料存在這支手機的瀏覽器裡，離線也能用，不會被其他人看到。換手機或清除瀏覽器資料前，記得先匯出備份。</footer>
+  
 </div>
 
 <div id="syncWarning" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#3a2226;color:#fbeaea;border-radius:12px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:12.5px;">
@@ -601,7 +639,9 @@ async function saveSettingsData(){ await persistAll(); }
 
 // ---------- portfolio form ----------
 let editingPortfolioId = null;
-let pendingPortfolioPhoto = null;
+let pendingPortfolioCover = null;
+let pendingPortfolioDetails = [];
+let pendingMaterials = [];
 
 $('togglePortfolioForm').addEventListener('click', ()=>{
   const opening = $('portfolioForm').style.display==='none';
@@ -617,9 +657,13 @@ $('cancelPortfolio').addEventListener('click', ()=>{
 function resetPortfolioForm(setToday){
   editingPortfolioId = null;
   ['pf-title','pf-notes','pf-price'].forEach(id=>$(id).value='');
-  $('pf-photo').value='';
-  pendingPortfolioPhoto = null;
-  renderPfPhotoPreview();
+  $('pf-cover-photo').value=''; $('pf-detail-photos').value='';
+  pendingPortfolioCover = null;
+  pendingPortfolioDetails = [];
+  pendingMaterials = [];
+  renderPfCoverPreview();
+  renderPfDetailPreview();
+  renderMaterialRows();
   $('pf-category').selectedIndex = 0;
   $('pf-who').selectedIndex = 0;
   $('pf-color').value = '#C98CA7';
@@ -627,25 +671,103 @@ function resetPortfolioForm(setToday){
   $('savePortfolio').textContent = '儲存作品';
 }
 
-function renderPfPhotoPreview(){
-  const wrap = $('pfPhotoPreview');
+function renderPfCoverPreview(){
+  const wrap = $('pfCoverPreview');
   wrap.innerHTML = '';
-  if(!pendingPortfolioPhoto) return;
+  if(!pendingPortfolioCover) return;
   const t = document.createElement('div');
   t.className = 'photo-thumb';
-  t.innerHTML = `<img src="${pendingPortfolioPhoto}"><button class="rm">×</button>`;
+  t.innerHTML = `<img src="${pendingPortfolioCover}"><button class="rm">×</button>`;
   t.querySelector('.rm').addEventListener('click', ()=>{
-    pendingPortfolioPhoto = null;
-    renderPfPhotoPreview();
+    pendingPortfolioCover = null;
+    renderPfCoverPreview();
   });
   wrap.appendChild(t);
 }
 
-$('pf-photo').addEventListener('change', async (e)=>{
+function renderPfDetailPreview(){
+  const wrap = $('pfDetailPreview');
+  wrap.innerHTML = '';
+  pendingPortfolioDetails.forEach((src, idx)=>{
+    const t = document.createElement('div');
+    t.className = 'photo-thumb';
+    t.innerHTML = `<img src="${src}"><button class="rm">×</button>`;
+    t.querySelector('.rm').addEventListener('click', ()=>{
+      pendingPortfolioDetails.splice(idx,1);
+      renderPfDetailPreview();
+    });
+    wrap.appendChild(t);
+  });
+}
+
+$('pf-cover-photo').addEventListener('change', async (e)=>{
   const file = e.target.files[0];
-  if(file){ pendingPortfolioPhoto = await resizeImage(file); }
+  if(file){ pendingPortfolioCover = await resizeImage(file); }
   e.target.value = '';
-  renderPfPhotoPreview();
+  renderPfCoverPreview();
+});
+
+$('pf-detail-photos').addEventListener('change', async (e)=>{
+  const files = Array.from(e.target.files || []);
+  for(const f of files){ pendingPortfolioDetails.push(await resizeImage(f)); }
+  e.target.value = '';
+  renderPfDetailPreview();
+});
+
+const FINGER_DEFS = ['拇','食','中','無','小'];
+
+function renderMaterialRows(){
+  const wrap = $('materialsList');
+  wrap.innerHTML = '';
+  pendingMaterials.forEach((mat, idx)=>{
+    if(!mat.fingers) mat.fingers = [];
+    const row = document.createElement('div');
+    row.className = 'material-card';
+    row.innerHTML = `
+      <div class="material-row">
+        <input type="text" list="materialCategoryOptions" placeholder="分類（例如：色膠）" value="${escapeHtml(mat.category||'')}">
+        <input type="text" placeholder="品牌" value="${escapeHtml(mat.brand||'')}">
+        <input type="text" placeholder="色號" value="${escapeHtml(mat.colorNumber||'')}">
+        <button type="button" class="icon-btn" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>
+      </div>
+      <div class="finger-row" data-side="左"><span class="finger-label">左</span></div>
+      <div class="finger-row" data-side="右"><span class="finger-label">右</span></div>`;
+
+    const [catInput, brandInput, colorInput] = row.querySelectorAll('.material-row input');
+    catInput.addEventListener('input', ()=>{ mat.category = catInput.value; });
+    brandInput.addEventListener('input', ()=>{ mat.brand = brandInput.value; });
+    colorInput.addEventListener('input', ()=>{ mat.colorNumber = colorInput.value; });
+    row.querySelector('.icon-btn').addEventListener('click', ()=>{
+      pendingMaterials.splice(idx,1);
+      renderMaterialRows();
+    });
+
+    ['左','右'].forEach(side=>{
+      const fingerRow = row.querySelector(`.finger-row[data-side="${side}"]`);
+      FINGER_DEFS.forEach(f=>{
+        const key = side + f;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'finger-btn' + (mat.fingers.includes(key) ? ' active' : '');
+        btn.textContent = f;
+        btn.addEventListener('click', ()=>{
+          if(mat.fingers.includes(key)){
+            mat.fingers = mat.fingers.filter(k=>k!==key);
+          } else {
+            mat.fingers.push(key);
+          }
+          renderMaterialRows();
+        });
+        fingerRow.appendChild(btn);
+      });
+    });
+    wrap.appendChild(row);
+  });
+}
+
+$('addMaterialRow').addEventListener('click', ()=>{
+  pendingMaterials.push({ category:'', brand:'', colorNumber:'' });
+  renderMaterialRows();
 });
 
 function startEditPortfolio(item){
@@ -657,8 +779,12 @@ function startEditPortfolio(item){
   $('pf-who').value = item.who;
   $('pf-price').value = item.price || '';
   $('pf-notes').value = item.notes || '';
-  pendingPortfolioPhoto = item.photo || null;
-  renderPfPhotoPreview();
+  pendingPortfolioCover = item.photo || (item.coverPhoto || null);
+  pendingPortfolioDetails = (item.detailPhotos || []).slice();
+  pendingMaterials = (item.materials || []).map(m=>({...m, fingers: (m.fingers||[]).slice()}));
+  renderPfCoverPreview();
+  renderPfDetailPreview();
+  renderMaterialRows();
   $('savePortfolio').textContent = '更新作品';
   $('portfolioForm').style.display = 'block';
   $('portfolioForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -690,6 +816,8 @@ $('savePortfolio').addEventListener('click', async ()=>{
   const btn = $('savePortfolio');
   btn.disabled = true; btn.textContent = '儲存中...';
 
+  const cleanMaterials = pendingMaterials.filter(m => m.category.trim() || m.brand.trim() || m.colorNumber.trim() || (m.fingers && m.fingers.length));
+
   if(editingPortfolioId){
     const idx = portfolio.findIndex(p=>p.id===editingPortfolioId);
     if(idx !== -1){
@@ -702,7 +830,9 @@ $('savePortfolio').addEventListener('click', async ()=>{
         who: $('pf-who').value,
         price: $('pf-price').value ? Number($('pf-price').value) : null,
         notes: $('pf-notes').value.trim(),
-        photo: pendingPortfolioPhoto
+        photo: pendingPortfolioCover,
+        detailPhotos: pendingPortfolioDetails.slice(),
+        materials: cleanMaterials
       };
     }
   } else {
@@ -715,7 +845,9 @@ $('savePortfolio').addEventListener('click', async ()=>{
       who: $('pf-who').value,
       price: $('pf-price').value ? Number($('pf-price').value) : null,
       notes: $('pf-notes').value.trim(),
-      photo: pendingPortfolioPhoto
+      photo: pendingPortfolioCover,
+      detailPhotos: pendingPortfolioDetails.slice(),
+      materials: cleanMaterials
     });
   }
 
@@ -733,25 +865,46 @@ function renderPortfolio(){
   portfolio.forEach(item=>{
     const card = document.createElement('div');
     card.className = 'p-card';
+    const materialTags = (item.materials||[]).map(m=>{
+      const parts = [m.category, m.brand, m.colorNumber].filter(Boolean);
+      if(m.fingers && m.fingers.length) parts.push(m.fingers.join('、'));
+      return parts.length ? `<span class="p-material-tag">${escapeHtml(parts.join(' · '))}</span>` : '';
+    }).join('');
+    const detailThumbs = (item.detailPhotos||[]).length
+      ? `<div class="n-images" style="margin-top:6px;">${item.detailPhotos.map(src=>`<img src="${src}">`).join('')}</div>`
+      : '';
     card.innerHTML = `
-      <div class="p-swatch" style="background:${item.color}"></div>
-      ${item.photo ? `<img class="p-photo" src="${item.photo}" alt="${escapeHtml(item.title)}">` :
-        `<div class="p-photo-empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d8c4bb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
-      <div class="p-body">
-        <div class="p-title">${escapeHtml(item.title)}</div>
-        <div class="p-meta">${item.date} · ${item.who}</div>
-        <div class="p-tags"><span class="p-tag">${item.category}</span></div>
-        ${item.notes ? `<div class="p-notes">${escapeHtml(item.notes)}</div>` : ''}
-        <div class="p-actions">
-          <span class="p-price">${item.price ? 'NT$'+item.price : ''}</span>
-          <div style="display:flex;gap:2px;">
-            <button class="ledger-del edit" data-id="${item.id}" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-            <button class="ledger-del" data-id="${item.id}" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>
+      <div class="p-header">
+        <div class="p-swatch" style="background:${item.color}"></div>
+        ${item.photo ? `<img class="p-photo" src="${item.photo}" alt="${escapeHtml(item.title)}">` :
+          `<div class="p-photo-empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d8c4bb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
+        <div class="p-title-row">
+          <div class="p-title">${escapeHtml(item.title)}</div>
+          <svg class="p-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="p-collapsible">
+        <div class="p-collapsible-inner">
+          <div class="p-meta">${item.date} · ${item.who}</div>
+          <div class="p-tags"><span class="p-tag">${item.category}</span></div>
+          ${materialTags ? `<div class="p-materials">${materialTags}</div>` : ''}
+          ${item.notes ? `<div class="p-notes">${escapeHtml(item.notes)}</div>` : ''}
+          ${detailThumbs}
+          <div class="p-actions">
+            <span class="p-price">${item.price ? 'NT$'+item.price : ''}</span>
+            <div style="display:flex;gap:2px;">
+              <button class="ledger-del edit" data-id="${item.id}" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+              <button class="ledger-del" data-id="${item.id}" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>
+            </div>
           </div>
         </div>
       </div>`;
-    card.querySelector('.edit').addEventListener('click', ()=>{ startEditPortfolio(item); });
-    card.querySelectorAll('.ledger-del')[1].addEventListener('click', async ()=>{
+    card.querySelector('.p-header').addEventListener('click', ()=>{
+      card.classList.toggle('open');
+    });
+    card.querySelector('.edit').addEventListener('click', (e)=>{ e.stopPropagation(); startEditPortfolio(item); });
+    card.querySelectorAll('.ledger-del')[1].addEventListener('click', async (e)=>{
+      e.stopPropagation();
       portfolio = portfolio.filter(p=>p.id!==item.id);
       if(editingPortfolioId === item.id){ resetPortfolioForm(false); $('portfolioForm').style.display='none'; }
       await savePortfolioData();
