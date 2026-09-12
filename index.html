@@ -8,24 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FBF6F2;
+    --cream:#F7F7F7;
     --card:#FFFFFF;
-    --ink:#2E2024;
-    --ink-soft:#6B5B60;
-    --berry:#B23A5C;
-    --berry-deep:#8C2C48;
-    --mauve:#C98CA7;
-    --gold:#C9A227;
-    --line:#EBDFDA;
-    --shadow: 0 1px 2px rgba(46,32,36,.04), 0 8px 24px -12px rgba(46,32,36,.18);
+    --ink:#1C1C1C;
+    --ink-soft:#6B6B6B;
+    --berry:#1C1C1C;
+    --berry-deep:#000000;
+    --mauve:#8A8A8A;
+    --gold:#4A4A4A;
+    --line:#E2E2E2;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.14);
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
     background:var(--cream);
-    background-image:
-      radial-gradient(circle at 8% 0%, rgba(201,140,167,.10), transparent 40%),
-      radial-gradient(circle at 92% 8%, rgba(201,162,39,.08), transparent 35%);
     color:var(--ink);
     font-family:'Work Sans', sans-serif;
     min-height:100vh;
@@ -46,7 +43,7 @@
   .brand-text h1[contenteditable]:hover,
   .brand-text h1[contenteditable]:focus{border-color:var(--mauve);}
   .brand-text h1[contenteditable]:empty::before{
-    content:'點此輸入店名';color:#d8b9c4;font-weight:500;
+    content:'點此輸入店名';color:#C9C9C9;font-weight:500;
   }
   .brand-text p{margin:0;font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;}
 
@@ -82,10 +79,10 @@
   }
   .btn:hover{background:var(--berry-deep);}
   .btn.ghost{background:transparent;color:var(--berry);border:1.4px solid var(--berry);}
-  .btn.ghost:hover{background:rgba(178,58,92,.06);}
+  .btn.ghost:hover{background:rgba(0,0,0,.05);}
   .btn.small{padding:6px 10px;font-size:12px;border-radius:8px;}
-  .btn.danger{background:transparent;color:#a04141;border:1px solid #e3cccc;}
-  .btn.danger:hover{background:#fbeeee;}
+  .btn.danger{background:transparent;color:#3A3A3A;border:1px solid #DDDDDD;}
+  .btn.danger:hover{background:#EDEDED;}
 
   label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin:12px 0 5px;}
   input[type=text], input[type=number], input[type=date], textarea, select{
@@ -113,9 +110,8 @@
     box-shadow:var(--shadow);display:flex;flex-direction:column;
   }
   .p-header{cursor:pointer;}
-  .p-swatch{height:10px;width:100%;}
-  .p-photo{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f2e9e4;display:block;}
-  .p-photo-empty{width:100%;aspect-ratio:1/1;background:#f6efeb;display:flex;align-items:center;justify-content:center;color:#d8c4bb;}
+  .p-photo{width:100%;aspect-ratio:1/1;object-fit:cover;background:#ECECEC;display:block;}
+  .p-photo-empty{width:100%;aspect-ratio:1/1;background:#F3F3F3;display:flex;align-items:center;justify-content:center;color:#C9C9C9;}
   .p-title-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:10px 12px;}
   .p-title{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;line-height:1.25;}
   .p-chevron{color:var(--ink-soft);flex-shrink:0;transition:transform .2s ease;}
@@ -125,7 +121,7 @@
   .p-collapsible-inner{padding:0 12px 12px;display:flex;flex-direction:column;gap:4px;}
   .p-meta{font-size:11.5px;color:var(--ink-soft);}
   .p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
-  .p-tag{font-size:10.5px;background:#f7eef1;color:var(--berry-deep);padding:2px 8px;border-radius:999px;font-weight:600;}
+  .p-tag{font-size:10.5px;background:#ECECEC;color:var(--berry-deep);padding:2px 8px;border-radius:999px;font-weight:600;}
   .p-notes{font-size:12px;color:var(--ink-soft);margin-top:2px;}
   .p-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
   .p-price{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--gold);font-weight:500;}
@@ -172,15 +168,15 @@
   }
 
   .cat-link{background:none;border:none;color:var(--berry);font-size:12px;font-weight:600;cursor:pointer;padding:0;margin-top:6px;text-decoration:underline;text-underline-offset:2px;}
-  .cat-manage{margin-top:10px;padding:12px;background:#faf5f2;border:1px solid var(--line);border-radius:10px;}
+  .cat-manage{margin-top:10px;padding:12px;background:#F3F3F3;border:1px solid var(--line);border-radius:10px;}
   .cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
   .cat-row input[type=color]{width:34px;height:34px;flex-shrink:0;padding:2px;}
   .cat-row input[type=text]{flex:1;padding:8px 10px;font-size:13px;}
-  .cat-row .icon-btn{background:none;border:none;color:#c9a9a9;cursor:pointer;padding:4px;flex-shrink:0;}
-  .cat-row .icon-btn:hover{color:#a04141;}
+  .cat-row .icon-btn{background:none;border:none;color:#B0B0B0;cursor:pointer;padding:4px;flex-shrink:0;}
+  .cat-row .icon-btn:hover{color:#3A3A3A;}
   .cat-add-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
 
-  .material-card{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:#faf7f5;}
+  .material-card{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:#F5F5F5;}
   .material-row{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
   .material-row input{flex:1;min-width:0;padding:8px 9px;font-size:13px;background:#fff;}
   .material-row .icon-btn{flex-shrink:0;}
@@ -193,7 +189,7 @@
   }
   .finger-btn.active{background:var(--berry);color:#fff;border-color:var(--berry);}
   .p-materials{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
-  .p-material-tag{font-size:10.5px;background:#f3eef7;color:#5b4a68;padding:2px 8px;border-radius:999px;font-weight:600;}
+  .p-material-tag{font-size:10.5px;background:#EFEFEF;color:#333333;padding:2px 8px;border-radius:999px;font-weight:600;}
 
   /* ---- expenses ---- */
   .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
@@ -212,19 +208,19 @@
   .ledger-note{font-size:12px;color:var(--ink-soft);}
   .ledger-date{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
   .ledger-amt{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;white-space:nowrap;}
-  .ledger-del{background:none;border:none;color:#c9a9a9;cursor:pointer;padding:4px;flex-shrink:0;}
-  .ledger-del:hover{color:#a04141;}
-  .ledger-del.edit{color:#b8a6ac;}
+  .ledger-del{background:none;border:none;color:#B0B0B0;cursor:pointer;padding:4px;flex-shrink:0;}
+  .ledger-del:hover{color:#3A3A3A;}
+  .ledger-del.edit{color:#A8A8A8;}
   .ledger-del.edit:hover{color:var(--berry);}
 
   /* ---- dashboard ---- */
   .bar-item{margin-bottom:14px;}
   .bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
-  .bar-track{background:#f3e9e4;border-radius:999px;height:9px;overflow:hidden;}
+  .bar-track{background:#ECECEC;border-radius:999px;height:9px;overflow:hidden;}
   .bar-fill{height:100%;border-radius:999px;transition:width .4s ease;}
 
   .goal-box{margin-top:18px;}
-  .goal-track{background:#f3e9e4;border-radius:999px;height:16px;overflow:hidden;position:relative;}
+  .goal-track{background:#ECECEC;border-radius:999px;height:16px;overflow:hidden;position:relative;}
   .goal-fill{height:100%;background:linear-gradient(90deg,var(--mauve),var(--berry));border-radius:999px;transition:width .4s ease;}
 
   .backup-box{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);}
@@ -243,8 +239,8 @@
   <header>
     <div class="brand">
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-        <rect x="4" y="4" width="26" height="26" rx="13" fill="#F7EEF1"/>
-        <path d="M21 9v10.3a3.4 3.4 0 11-1.6-2.9V12l-6 1.4v6a3.4 3.4 0 11-1.6-2.9V11l9.2-2z" fill="#B23A5C"/>
+        <rect x="4" y="4" width="26" height="26" rx="13" fill="#ECECEC"/>
+        <path d="M21 9v10.3a3.4 3.4 0 11-1.6-2.9V12l-6 1.4v6a3.4 3.4 0 11-1.6-2.9V11l9.2-2z" fill="#1C1C1C"/>
       </svg>
       <div class="brand-text">
         <h1 id="brandName" contenteditable="true" spellcheck="false"></h1>
@@ -253,7 +249,7 @@
     </div>
     <nav>
       <button class="tab-btn active" data-tab="portfolio"><span class="cap" style="background:var(--berry)"></span>作品集</button>
-      <button class="tab-btn" data-tab="notes"><span class="cap" style="background:#7C6A93"></span>筆記</button>
+      <button class="tab-btn" data-tab="notes"><span class="cap" style="background:#4A4A4A"></span>筆記</button>
       <button class="tab-btn" data-tab="expenses"><span class="cap" style="background:var(--gold)"></span>支出</button>
       <button class="tab-btn" data-tab="dashboard"><span class="cap" style="background:var(--mauve)"></span>總覽</button>
     </nav>
@@ -272,10 +268,6 @@
           <div>
             <label>作品名稱 / 主題</label>
             <input type="text" id="pf-title" placeholder="例如：法式漸層 / 貓眼玫瑰金">
-          </div>
-          <div style="max-width:70px;">
-            <label>色卡</label>
-            <input type="color" id="pf-color" value="#C98CA7">
           </div>
         </div>
         <div class="row">
@@ -340,7 +332,7 @@
 
       <div class="grid" id="portfolioGrid"></div>
       <div class="empty-state" id="portfolioEmpty" style="display:none;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C98CA7" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9C9C9" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
         <div>還沒有作品，新增第一筆練習紀錄吧</div>
       </div>
     </div>
@@ -355,7 +347,7 @@
       <button class="btn" id="toggleNoteForm">+ 新增筆記</button>
 
       <div class="form-card" id="noteForm" style="display:none;">
-        <p class="muted" id="draftHint" style="display:none;background:#f7eef1;color:var(--berry-deep);padding:8px 10px;border-radius:8px;margin:0 0 10px;">📝 已還原上次未儲存完成的草稿</p>
+        <p class="muted" id="draftHint" style="display:none;background:#ECECEC;color:var(--berry-deep);padding:8px 10px;border-radius:8px;margin:0 0 10px;">📝 已還原上次未儲存完成的草稿</p>
         <div class="row">
           <div>
             <label>標題</label>
@@ -371,7 +363,7 @@
         <div class="cat-manage" id="catManage" style="display:none;">
           <div id="catList"></div>
           <div class="cat-add-row">
-            <input type="color" id="newCatColor" value="#B23A5C">
+            <input type="color" id="newCatColor" value="#1C1C1C">
             <input type="text" id="newCatName" placeholder="新增分類名稱">
             <button class="btn small" id="addCatBtn">新增</button>
           </div>
@@ -394,7 +386,7 @@
 
       <div class="n-list" id="notesList"></div>
       <div class="empty-state" id="notesEmpty" style="display:none;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#7C6A93" stroke-width="1.5"><path d="M4 4h13l3 3v13a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" stroke-width="1.5"><path d="M4 4h13l3 3v13a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
         <div id="notesEmptyText">還沒有筆記，把學到的東西記下來吧</div>
       </div>
     </div>
@@ -446,7 +438,7 @@
 
       <div class="ledger" id="expenseLedger"></div>
       <div class="empty-state" id="expenseEmpty" style="display:none;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
         <div>還沒有支出紀錄</div>
       </div>
     </div>
@@ -497,29 +489,29 @@
   
 </div>
 
-<div id="syncWarning" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#3a2226;color:#fbeaea;border-radius:12px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:12.5px;">
+<div id="syncWarning" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;background:#2A2A2A;color:#F2F2F2;border-radius:12px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-size:12.5px;">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
     <div>⚠️ 這支手機的瀏覽器無法寫入本機儲存(常見原因：無痕/隱私瀏覽模式，或儲存空間已滿)。建議先下載備份檔，並改用一般瀏覽模式開啟。</div>
-    <button id="syncWarningClose" style="background:none;border:none;color:#fbeaea;font-size:16px;line-height:1;cursor:pointer;padding:0;">×</button>
+    <button id="syncWarningClose" style="background:none;border:none;color:#F2F2F2;font-size:16px;line-height:1;cursor:pointer;padding:0;">×</button>
   </div>
   <button class="btn small" id="syncWarningExport" style="margin-top:8px;">下載備份檔</button>
 </div>
 
 <script>
 const CATS = {
-  '材料耗材': '#B23A5C',
-  '工具設備': '#7C6A93',
-  '課程學費': '#C9A227',
-  '房租場地': '#4F6D5C',
-  '行銷其他': '#8C8C8C'
+  '材料耗材': '#1C1C1C',
+  '工具設備': '#4A4A4A',
+  '課程學費': '#787878',
+  '房租場地': '#A6A6A6',
+  '行銷其他': '#CFCFCF'
 };
 
 const NOTE_CATS_DEFAULT = [
-  { id:'c1', name:'前置處理', color:'#4F6D5C' },
-  { id:'c2', name:'膠的分類', color:'#B23A5C' },
-  { id:'c3', name:'打磨機用法', color:'#7C6A93' },
-  { id:'c4', name:'工具介紹', color:'#C9A227' },
-  { id:'c5', name:'其他', color:'#8C8C8C' }
+  { id:'c1', name:'前置處理', color:'#1C1C1C' },
+  { id:'c2', name:'膠的分類', color:'#4A4A4A' },
+  { id:'c3', name:'打磨機用法', color:'#787878' },
+  { id:'c4', name:'工具介紹', color:'#A6A6A6' },
+  { id:'c5', name:'其他', color:'#CFCFCF' }
 ];
 
 let portfolio = [];
@@ -666,7 +658,6 @@ function resetPortfolioForm(setToday){
   renderMaterialRows();
   $('pf-category').selectedIndex = 0;
   $('pf-who').selectedIndex = 0;
-  $('pf-color').value = '#C98CA7';
   if(setToday) $('pf-date').valueAsDate = new Date();
   $('savePortfolio').textContent = '儲存作品';
 }
@@ -773,7 +764,6 @@ $('addMaterialRow').addEventListener('click', ()=>{
 function startEditPortfolio(item){
   editingPortfolioId = item.id;
   $('pf-title').value = item.title;
-  $('pf-color').value = item.color || '#C98CA7';
   $('pf-date').value = item.date;
   $('pf-category').value = item.category;
   $('pf-who').value = item.who;
@@ -824,7 +814,6 @@ $('savePortfolio').addEventListener('click', async ()=>{
       portfolio[idx] = {
         ...portfolio[idx],
         title,
-        color: $('pf-color').value,
         date: $('pf-date').value || portfolio[idx].date,
         category: $('pf-category').value,
         who: $('pf-who').value,
@@ -839,7 +828,6 @@ $('savePortfolio').addEventListener('click', async ()=>{
     portfolio.unshift({
       id: Date.now().toString(),
       title,
-      color: $('pf-color').value,
       date: $('pf-date').value || new Date().toISOString().slice(0,10),
       category: $('pf-category').value,
       who: $('pf-who').value,
@@ -875,9 +863,8 @@ function renderPortfolio(){
       : '';
     card.innerHTML = `
       <div class="p-header">
-        <div class="p-swatch" style="background:${item.color}"></div>
         ${item.photo ? `<img class="p-photo" src="${item.photo}" alt="${escapeHtml(item.title)}">` :
-          `<div class="p-photo-empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d8c4bb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
+          `<div class="p-photo-empty"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9C9C9" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`}
         <div class="p-title-row">
           <div class="p-title">${escapeHtml(item.title)}</div>
           <svg class="p-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -1353,7 +1340,7 @@ function renderDashboard(){
     <div class="stat"><div class="label">累計投入</div><div class="value accent">NT$ ${totalSpent.toLocaleString()}</div></div>
     <div class="stat"><div class="label">作品總數</div><div class="value">${totalWorks}</div></div>
     <div class="stat"><div class="label">付費案件</div><div class="value">${paidWorks}</div></div>
-    <div class="stat"><div class="label">已賺回</div><div class="value" style="color:#4F6D5C">NT$ ${earned.toLocaleString()}</div></div>
+    <div class="stat"><div class="label">已賺回</div><div class="value" style="color:var(--ink);font-weight:700;">NT$ ${earned.toLocaleString()}</div></div>
   `;
 
   const byCat = {};
