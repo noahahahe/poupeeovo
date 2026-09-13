@@ -346,7 +346,7 @@
           <option value="上層膠"><option value="偏光粉"><option value="金屬膠"><option value="墨水">
           <option value="石膏膠"><option value="金屬粉"><option value="水彩"><option value="洞洞膠">
           <option value="彩繪膠"><option value="鏡面粉"><option value="奶油膠"><option value="延長膠">
-          <option value="拍拍膠">
+          <option value="拍拍膠"><option value="工具">
         </datalist>
 
         <label>筆記（用了什麼技法、遇到的問題、下次改進…）</label>
@@ -441,8 +441,8 @@
             <input type="text" id="lib-brand" placeholder="例如：Ageha">
           </div>
         </div>
-        <label>色號</label>
-        <input type="text" id="lib-colornum" placeholder="例如：99">
+        <label>編號 / 系列 / 色號（選填）</label>
+        <input type="text" id="lib-colornum" placeholder="例如：99，或鋼板系列名稱">
         <div style="margin-top:14px;display:flex;gap:8px;">
           <button class="btn" id="saveLibItem">加入材料庫</button>
           <button class="btn ghost" id="cancelLibItem">取消</button>
@@ -869,10 +869,27 @@ function renderLibrary(){
       row.className = 'lib-item';
       row.innerHTML = `
         <div class="lib-item-main"><span class="b">${escapeHtml(m.brand||'（未填品牌）')}</span>${m.colorNumber ? ' <span class="c">'+escapeHtml(m.colorNumber)+'</span>' : ''}</div>
+        <button class="ledger-del" title="複製"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 01-1-1V4a1 1 0 011-1h10a1 1 0 011 1v1"/></svg></button>
+        <button class="ledger-del edit" title="編輯"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
         <button class="ledger-del" title="刪除"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6h16z"/></svg></button>`;
-      row.querySelector('.ledger-del').addEventListener('click', async (e)=>{
+      const [dupBtn, editBtn, delBtn] = row.querySelectorAll('.ledger-del');
+      dupBtn.addEventListener('click', async (e)=>{
+        e.stopPropagation();
+        const copy = { ...m, id: Date.now().toString() };
+        materialsLibrary.unshift(copy);
+        await persistAll();
+        renderLibrary();
+        renderMaterialPicker();
+        startEditLib(copy); // 直接進入編輯，方便只改色號/系列
+      });
+      editBtn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        startEditLib(m);
+      });
+      delBtn.addEventListener('click', async (e)=>{
         e.stopPropagation();
         materialsLibrary = materialsLibrary.filter(x=>x.id!==m.id);
+        if(editingLibId === m.id) resetLibForm();
         await persistAll();
         renderLibrary();
         renderMaterialPicker();
@@ -888,12 +905,33 @@ function renderLibrary(){
 
 $('libSearch').addEventListener('input', renderLibrary);
 
+let editingLibId = null;
+
+function resetLibForm(){
+  editingLibId = null;
+  ['lib-category','lib-brand','lib-colornum'].forEach(id=>$(id).value='');
+  $('saveLibItem').textContent = '加入材料庫';
+}
+
+function startEditLib(item){
+  editingLibId = item.id;
+  $('lib-category').value = item.category || '';
+  $('lib-brand').value = item.brand || '';
+  $('lib-colornum').value = item.colorNumber || '';
+  $('saveLibItem').textContent = '更新材料';
+  $('libForm').style.display = 'block';
+  $('libForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  $('lib-colornum').focus();
+}
+
 $('toggleLibForm').addEventListener('click', ()=>{
-  $('libForm').style.display = $('libForm').style.display==='none' ? 'block' : 'none';
+  const opening = $('libForm').style.display==='none';
+  $('libForm').style.display = opening ? 'block' : 'none';
+  if(!opening) resetLibForm();
 });
 $('cancelLibItem').addEventListener('click', ()=>{
   $('libForm').style.display='none';
-  ['lib-category','lib-brand','lib-colornum'].forEach(id=>$(id).value='');
+  resetLibForm();
 });
 
 $('saveLibItem').addEventListener('click', async ()=>{
@@ -901,9 +939,18 @@ $('saveLibItem').addEventListener('click', async ()=>{
   const brand = $('lib-brand').value.trim();
   const colorNumber = $('lib-colornum').value.trim();
   if(!category){ $('lib-category').focus(); return; }
-  materialsLibrary.unshift({ id: Date.now().toString(), category, brand, colorNumber });
+
+  if(editingLibId){
+    const idx = materialsLibrary.findIndex(x=>x.id===editingLibId);
+    if(idx !== -1){
+      materialsLibrary[idx] = { ...materialsLibrary[idx], category, brand, colorNumber };
+    }
+  } else {
+    materialsLibrary.unshift({ id: Date.now().toString(), category, brand, colorNumber });
+  }
+
   await persistAll();
-  ['lib-category','lib-brand','lib-colornum'].forEach(id=>$(id).value='');
+  resetLibForm();
   $('libForm').style.display='none';
   renderLibrary();
   renderMaterialPicker();
@@ -1497,7 +1544,12 @@ function renderExpenses(){
   const ledger = $('expenseLedger');
   ledger.innerHTML = '';
   $('expenseEmpty').style.display = expenses.length ? 'none' : 'block';
-  expenses.forEach(item=>{
+  const sorted = [...expenses].sort((a,b)=>{
+    const d = (b.date||'').localeCompare(a.date||'');
+    if(d !== 0) return d;
+    return (b.id||'').localeCompare(a.id||''); // 同一天內，後新增的排前面
+  });
+  sorted.forEach(item=>{
     const row = document.createElement('div');
     row.className = 'ledger-row';
     row.innerHTML = `
